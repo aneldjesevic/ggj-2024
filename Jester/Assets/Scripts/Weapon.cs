@@ -9,23 +9,44 @@ public class Weapon : MonoBehaviour
 
     MMFeedbacks feel;
 
+    public bool isBeingHeld;
+    public bool isPlayerWeapon;
+
+    public Rigidbody2D rb;
+
     private void Start()
     {
         feel = GetComponent<MMFeedbacks>();
+        rb = GetComponent<Rigidbody2D>();
+
+        isBeingHeld = false;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        /*if(collision.gameObject.GetComponent<Weapon>() && collision.gameObject.transform.parent != null)
-        {
-            feel.PlayFeedbacks();
-        }*/
-    }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
         if (collision.gameObject.GetComponent<Weapon>() && collision.gameObject.transform.parent != null)
         {
             feel.PlayFeedbacks();
+        }
+        if (!collision.gameObject.CompareTag("Player"))
+        {
+            isBeingHeld = rb.isKinematic;
+        }
+    }
+
+
+    private void Update()
+    {
+        isBeingHeld = rb.isKinematic;
+
+        if (isBeingHeld)
+        {
+            if (isPlayerWeapon)
+                gameObject.layer = LayerMask.NameToLayer("Weapon");
+        }
+        else
+        {
+            gameObject.layer = LayerMask.NameToLayer("Player");
         }
     }
 }

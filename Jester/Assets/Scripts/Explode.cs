@@ -7,16 +7,6 @@ public class Explode : MonoBehaviour
 {
     [SerializeField] GameObject[] bodyParts;
 
-    void Start()
-    {
-
-    }
-
-    void Update()
-    {
-
-    }
-
     public void ExplodeObj()
     {
         foreach (GameObject part in bodyParts)
@@ -36,7 +26,7 @@ public class Explode : MonoBehaviour
             part.gameObject.layer = 3;
 
             Vector2 randomForce = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
-            float forceMagnitude = Random.Range(5f, 20f);
+            float forceMagnitude = Random.Range(10f, 40f);
             rb.AddForce(randomForce * forceMagnitude);
 
             Destroy(part, 2.5f);

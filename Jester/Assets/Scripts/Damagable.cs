@@ -34,7 +34,7 @@ public class Damagable : MonoBehaviour
         if (timer <= 0 && healthObj.timer <= 0)
         {
             Weapon weaponComponent = collision.gameObject.GetComponent<Weapon>();
-            if (weaponComponent != null && collision.gameObject.transform.parent != null)
+            if (weaponComponent != null && weaponComponent.isBeingHeld)
             {
                 Instantiate(bloodParticles, transform.position, Quaternion.identity);
                 TakeDamage(weaponComponent.damage, collision.gameObject);
@@ -54,6 +54,16 @@ public class Damagable : MonoBehaviour
 
     void TakeDamage(int damage, GameObject collision)
     {
+        if (name.ToLower().Contains("head"))
+        {
+            FindObjectOfType<AudienceManager>().ChangeVolume(2);
+            healthObj.health -= damage;
+        }
+        else
+        {
+            FindObjectOfType<AudienceManager>().ChangeVolume(1);
+        }
+
         feel.PlayFeedbacks();
         FindObjectOfType<CameraShake>().ShakeCamera();
         timer = delay;

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.XR;
 
 public class FlipPlayer : MonoBehaviour
 {
@@ -14,6 +16,8 @@ public class FlipPlayer : MonoBehaviour
 
     [SerializeField] SpriteRenderer[] sprites;
 
+    GameObject currentWeapon;
+
     private void Start()
     {
         FlipChildrenXScale(false);
@@ -25,17 +29,32 @@ public class FlipPlayer : MonoBehaviour
 
         if (mousePositionX > 0.5f)
         {
-            FlipChildrenXScale(false); 
+            FlipChildrenXScale(false);
         }
         else
         {
-            FlipChildrenXScale(true); 
+            FlipChildrenXScale(true);
+        }
+        SetCurrentWeapon();
+    }
+
+    void SetCurrentWeapon()
+    {
+        Weapon[] weapons = FindObjectsOfType<Weapon>();
+
+        foreach (Weapon weaponObject in weapons)
+        {
+            if (weaponObject.isBeingHeld && weaponObject && weaponObject.isPlayerWeapon)
+            {
+                currentWeapon = weaponObject.gameObject;
+            }
         }
     }
 
 
     void FlipChildrenXScale(bool shouldFlip)
     {
+        Debug.Log(shouldFlip);
         foreach (SpriteRenderer sr in sprites)
         {
             sr.flipX = shouldFlip;
@@ -55,11 +74,19 @@ public class FlipPlayer : MonoBehaviour
 
     void TransferChild(Transform from, Transform to)
     {
-        if (from.childCount > 0)
+        /*if (from.GetChild(0).childCount > 0)
         {
             Transform child = from.GetChild(0);
             child.SetParent(to);
-            child.localPosition = Vector3.zero; 
+            child.localPosition = Vector3.zero;
+            Debug.Log(child);
+
+        }*/
+        if (currentWeapon && currentWeapon.GetComponent<Rigidbody2D>().isKinematic)
+        {
+            currentWeapon.transform.SetParent(to.GetChild(0));
+            currentWeapon.transform.localPosition = Vector3.zero;
+            currentWeapon.transform.localRotation = Quaternion.identity;
         }
     }
 
@@ -71,4 +98,5 @@ public class FlipPlayer : MonoBehaviour
         upperRightArm.sortingOrder = rightOrder;
         lowerRightArm.sortingOrder = rightOrder;
     }
+
 }
