@@ -46,7 +46,8 @@ public class Weapon : MonoBehaviour
         }
         else
         {
-            gameObject.layer = LayerMask.NameToLayer("Player");
+            if (isPlayerWeapon)
+                gameObject.layer = LayerMask.NameToLayer("Player");
         }
     }
 }

@@ -16,9 +16,9 @@ public class WaveSystem : MonoBehaviour
 
     bool isInWave;
 
-    int currentWave;
+    [SerializeField] int currentWave;
 
-    GameObject[] enemies;
+    [SerializeField] GameObject[] enemies;
 
     void Start()
     {
@@ -35,6 +35,7 @@ public class WaveSystem : MonoBehaviour
         for (int i = 0; i < (int)amountOfEnemies; i++)
         {
             int enemyChosen = Random.Range(0, enemyTypes.Length);
+            Debug.Log(enemyChosen);
             int spawnPoint = Random.Range(0, 2);
 
             if (spawnPoint == 0)
@@ -57,7 +58,7 @@ public class WaveSystem : MonoBehaviour
             enemies = GameObject.FindGameObjectsWithTag("Enemy");
         }
 
-        if (enemies == null && !isInWave)
+        if (enemies.Length == 0 && !isInWave)
         {
             Debug.Log("Starting Wave" + currentWave);
 

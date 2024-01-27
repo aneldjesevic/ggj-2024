@@ -10,7 +10,7 @@ public class Damagable : MonoBehaviour
     [SerializeField] float knockbackForce = 500f;
 
     float timer;
-    float delay = 0.1f;
+    float delay = 0.2f;
 
     [SerializeField] GameObject bloodParticles;
 
