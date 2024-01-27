@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class AudienceSpawner : MonoBehaviour
 {
-    public GameObject[] personPrefabs;
+    public GameObject personPrefab;
     public float noSpawnChance = 0.2f; // 20% chance of not spawning
+
+    public Sprite[] heads;
+    public Sprite[] bodies;
+    GameObject personInstance = null;
 
     void Start()
     {
@@ -27,13 +31,12 @@ public class AudienceSpawner : MonoBehaviour
 
             if (randomChance > noSpawnChance)
             {
-                GameObject randomPrefab = personPrefabs[Random.Range(0, personPrefabs.Length)];
-
-                if (randomPrefab != null)
-                {
-                    GameObject personInstance = Instantiate(randomPrefab, child.position, Quaternion.identity);
-                    personInstance.transform.parent = transform;
-                }
+                Sprite randomHead = heads[Random.Range(0, heads.Length)];
+                Sprite randomBody = bodies[Random.Range(0, bodies.Length)];
+                personInstance = Instantiate(personPrefab, child.position, Quaternion.identity);
+                personInstance.transform.parent = transform;
+                personInstance.GetComponent<SpriteRenderer>().sprite = randomBody;
+                personInstance.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = randomHead;
             }
         }
     }
