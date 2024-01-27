@@ -16,7 +16,14 @@ public class Weapon : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.GetComponent<Weapon>())
+        /*if(collision.gameObject.GetComponent<Weapon>() && collision.gameObject.transform.parent != null)
+        {
+            feel.PlayFeedbacks();
+        }*/
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.GetComponent<Weapon>() && collision.gameObject.transform.parent != null)
         {
             feel.PlayFeedbacks();
         }

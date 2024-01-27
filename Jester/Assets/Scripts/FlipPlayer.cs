@@ -21,42 +21,54 @@ public class FlipPlayer : MonoBehaviour
 
     void Update()
     {
-        float horizontalInput = Input.GetAxisRaw("Horizontal");
+        float mousePositionX = Input.mousePosition.x / Screen.width;
 
-        if (horizontalInput > 0.05f)
+        if (mousePositionX > 0.5f)
         {
-            FlipChildrenXScale(false);
+            FlipChildrenXScale(false); 
         }
-        else if (horizontalInput < -0.05f)
+        else
         {
-            FlipChildrenXScale(true);
+            FlipChildrenXScale(true); 
         }
     }
+
 
     void FlipChildrenXScale(bool shouldFlip)
     {
         foreach (SpriteRenderer sr in sprites)
         {
             sr.flipX = shouldFlip;
-
-            if (shouldFlip)
-            {
-                upperLeftArm.sortingOrder = 1;
-                lowerLeftArm.sortingOrder = 1;
-
-                upperRightArm.sortingOrder = 5;
-                lowerRightArm.sortingOrder = 5;
-
-            }
-            else
-            {
-
-                upperLeftArm.sortingOrder = 5;
-                lowerLeftArm.sortingOrder = 5;
-
-                upperRightArm.sortingOrder = 1;
-                lowerRightArm.sortingOrder = 1;
-            }
         }
+
+        if (shouldFlip)
+        {
+            TransferChild(lowerRightArm.transform, lowerLeftArm.transform);
+            SetSortingOrder(1, 5);
+        }
+        else
+        {
+            TransferChild(lowerLeftArm.transform, lowerRightArm.transform);
+            SetSortingOrder(5, 1);
+        }
+    }
+
+    void TransferChild(Transform from, Transform to)
+    {
+        if (from.childCount > 0)
+        {
+            Transform child = from.GetChild(0);
+            child.SetParent(to);
+            child.localPosition = Vector3.zero; 
+        }
+    }
+
+    void SetSortingOrder(int leftOrder, int rightOrder)
+    {
+        upperLeftArm.sortingOrder = leftOrder;
+        lowerLeftArm.sortingOrder = leftOrder;
+
+        upperRightArm.sortingOrder = rightOrder;
+        lowerRightArm.sortingOrder = rightOrder;
     }
 }

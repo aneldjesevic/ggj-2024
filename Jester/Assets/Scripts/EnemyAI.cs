@@ -20,6 +20,9 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] GameObject upperRightArm;
     [SerializeField] GameObject lowerRightArm;
 
+    [SerializeField] GameObject handL;
+    [SerializeField] GameObject handR;
+
     void Start()
     {
         currentRB = leftRB;
@@ -49,16 +52,16 @@ public class EnemyAI : MonoBehaviour
         {
             spriteRenderer.flipX = isLeft;
         }
-        /*if (!isLeft)
+         if (!isLeft)
         {
-            upperRightArm.GetComponent<RagdollLimb>().muscleRotation = 25f;
-            lowerRightArm.GetComponent<RagdollLimb>().muscleRotation = 25f;
+             handL.SetActive(false);
+             handR.SetActive(true);
         }
         else
         {
-            upperRightArm.GetComponent<RagdollLimb>().muscleRotation = -25f;
-            lowerRightArm.GetComponent<RagdollLimb>().muscleRotation = -25f;
-        }*/
+            handR.SetActive(false);
+            handL.SetActive(true);
+        } 
     }
 
     IEnumerator SwitchRigidbodyRoutine()
