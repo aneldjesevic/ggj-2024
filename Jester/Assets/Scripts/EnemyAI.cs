@@ -31,13 +31,16 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
-        Vector2 direction = player.position - currentRB.transform.position;
+        if (player)
+        {
+            Vector2 direction = player.position - currentRB.transform.position;
 
-        direction.Normalize();
+            direction.Normalize();
 
-        currentRB.velocity = new Vector2(direction.x * movementSpeed, currentRB.velocity.y);
+            currentRB.velocity = new Vector2(direction.x * movementSpeed, currentRB.velocity.y);
 
-        FlipSprites(direction.x < 0);
+            FlipSprites(direction.x < 0);
+        }
     }
 
     void FlipSprites(bool isLeft)
