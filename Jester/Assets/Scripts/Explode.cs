@@ -12,6 +12,8 @@ public class Explode : MonoBehaviour
         foreach (GameObject part in bodyParts)
         {
             Destroy(part.GetComponent<HingeJoint2D>());
+            if (part.GetComponent<Grab>())
+                Destroy(part.GetComponent<Grab>());
             Destroy(part.GetComponent<RagdollLimb>());
             Destroy(part.GetComponent<Damagable>());
 

@@ -34,6 +34,7 @@ public class WaveSystem : MonoBehaviour
 
         for (int i = 0; i < (int)amountOfEnemies; i++)
         {
+            yield return new WaitForSeconds(1f);
             int enemyChosen = Random.Range(0, enemyTypes.Length);
             Debug.Log(enemyChosen);
             int spawnPoint = Random.Range(0, 2);
