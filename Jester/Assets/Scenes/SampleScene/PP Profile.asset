@@ -28,6 +28,31 @@ MonoBehaviour:
   rounded:
     m_OverrideState: 1
     m_Value: 0
+--- !u!114 &-8252891419046426936
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccf1aba9553839d41ae37dd52e9ebcce, type: 3}
+  m_Name: MotionBlur
+  m_EditorClassIdentifier: 
+  active: 1
+  mode:
+    m_OverrideState: 1
+    m_Value: 0
+  quality:
+    m_OverrideState: 1
+    m_Value: 1
+  intensity:
+    m_OverrideState: 1
+    m_Value: 0.153
+  clamp:
+    m_OverrideState: 1
+    m_Value: 0.05
 --- !u!114 &-8210410002722466965
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -40,10 +65,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81180773991d8724ab7f2d216912b564, type: 3}
   m_Name: ChromaticAberration
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   intensity:
     m_OverrideState: 1
-    m_Value: 0.149
+    m_Value: 0.052
 --- !u!114 &-7166217659095056086
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -337,6 +362,7 @@ MonoBehaviour:
   - {fileID: 4212105862983444078}
   - {fileID: -8210410002722466965}
   - {fileID: -7166217659095056086}
+  - {fileID: -8252891419046426936}
 --- !u!114 &1396279838352475556
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -454,7 +480,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5e1dc532bcb41949b58bc4f2abfbb7e, type: 3}
   m_Name: LensDistortion
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   intensity:
     m_OverrideState: 1
     m_Value: 0.14

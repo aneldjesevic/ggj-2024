@@ -16,9 +16,9 @@ MonoBehaviour:
   movementLerpFactor: 25
   jumpMovementSpeed: 6
   jumpDelay: 0.25
-  jumpForce: 43
+  jumpForce: 63
   jumpGravityScale: 1.2
-  fallGravityScale: 1.96
+  fallGravityScale: 1.26
   groundGravityScale: 0.25
   isRemoveYVelocityBeforeJumping: 1
   isRemoveXVelocityBeforeDirectionSwitch: 0
