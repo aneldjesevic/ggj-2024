@@ -16,6 +16,7 @@ public class Damagable : MonoBehaviour
 
     MMFeedbacks feel;
 
+
     private void Start()
     {
         feel = GetComponentInParent<MMFeedbacks>();

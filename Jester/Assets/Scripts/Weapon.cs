@@ -27,17 +27,19 @@ public class Weapon : MonoBehaviour
         if (collision.gameObject.GetComponent<Weapon>() && collision.gameObject.transform.parent != null)
         {
             feel.PlayFeedbacks();
-        }
-        if (!collision.gameObject.CompareTag("Player"))
-        {
-            isBeingHeld = rb.isKinematic;
+
+            //Vector2 knockbackDirection = (transform.position - collision.transform.position).normalized;
+
+            collision.gameObject.transform.parent.GetComponentInParent<Rigidbody2D>().AddForce(transform.right * 300, ForceMode2D.Impulse);
+
+            GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>().AddForce(-transform.right * 160, ForceMode2D.Impulse);
         }
     }
 
 
     private void Update()
     {
-        isBeingHeld = rb.isKinematic;
+        isBeingHeld = transform.parent;
 
         if (isBeingHeld)
         {
@@ -49,5 +51,7 @@ public class Weapon : MonoBehaviour
             if (isPlayerWeapon)
                 gameObject.layer = LayerMask.NameToLayer("Player");
         }
+
+
     }
 }

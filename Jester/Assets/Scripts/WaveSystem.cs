@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class WaveSystem : MonoBehaviour
 {
-
     [SerializeField] GameObject[] enemyTypes;
     [SerializeField] float multiplier;
     [SerializeField] float timeBetweenWaves;
@@ -20,6 +19,9 @@ public class WaveSystem : MonoBehaviour
 
     [SerializeField] GameObject[] enemies;
 
+    [SerializeField] Animator animatorL;
+    [SerializeField] Animator animatorR;
+
     void Start()
     {
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
@@ -31,25 +33,65 @@ public class WaveSystem : MonoBehaviour
         yield return new WaitForSeconds(timeBetweenWaves);
 
         float amountOfEnemies = enemiesToSpawn *= multiplier;
+        List<GameObject> spawnedEnemies = new List<GameObject>();
 
         for (int i = 0; i < (int)amountOfEnemies; i++)
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.2f);
             int enemyChosen = Random.Range(0, enemyTypes.Length);
             Debug.Log(enemyChosen);
             int spawnPoint = Random.Range(0, 2);
 
+            GameObject newEnemy;
             if (spawnPoint == 0)
             {
-                Instantiate(enemyTypes[enemyChosen], spawnL.position, Quaternion.identity);
+                StartOpenAnimR();
+                yield return new WaitForSeconds(0.3f);
+                newEnemy = Instantiate(enemyTypes[enemyChosen], spawnL.position, Quaternion.identity);
             }
-            if (spawnPoint == 1)
+            else
             {
-                Instantiate(enemyTypes[enemyChosen], spawnR.position, Quaternion.identity);
+                StartOpenAnimL();
+                yield return new WaitForSeconds(0.3f);
+                newEnemy = Instantiate(enemyTypes[enemyChosen], spawnR.position, Quaternion.identity);
             }
+
+            spawnedEnemies.Add(newEnemy);
         }
+
+        yield return new WaitUntil(() => AllEnemiesSpawned(spawnedEnemies));
+
         currentWave++;
         isInWave = false;
+
+        Invoke("StopOpenAnim", 2f);
+    }
+
+    bool AllEnemiesSpawned(List<GameObject> spawnedEnemies)
+    {
+        foreach (GameObject enemy in spawnedEnemies)
+        {
+            if (enemy == null)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    void StartOpenAnimL()
+    {
+        animatorL.SetBool("open", true);
+    }
+    void StartOpenAnimR()
+    {
+        animatorR.SetBool("open", true);
+    }
+
+    void StopOpenAnim()
+    {
+        animatorL.SetBool("open", false);
+        animatorR.SetBool("open", false);
     }
 
     private void Update()

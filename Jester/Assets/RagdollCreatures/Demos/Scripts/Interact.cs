@@ -96,7 +96,10 @@ namespace RagdollCreatures
                 Rigidbody2D rb = nearestInteractable.GetComponent<Rigidbody2D>();
                 if (null != rb)
                 {
-                    rb.isKinematic = true;
+                    //rb.isKinematic = true;
+                    /*rb.gravityScale = 0;
+                    rb.drag = 10;
+                    rb.constraints = RigidbodyConstraints2D.FreezeRotation;*/
                 }
 
                 Equipable equipable = nearestInteractable.GetComponent<Equipable>();
@@ -142,7 +145,10 @@ namespace RagdollCreatures
                 Rigidbody2D rb = currentInteractable.GetComponent<Rigidbody2D>();
                 if (null != rb)
                 {
-                    rb.isKinematic = false;
+                    //rb.isKinematic = false;
+                    /*rb.gravityScale = 1;
+                    rb.drag = 0;
+                    rb.constraints = RigidbodyConstraints2D.None;*/
                 }
 
                 RotationFlipper rotationFlipper = currentInteractable.GetComponent<RotationFlipper>();

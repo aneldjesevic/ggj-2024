@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.XR;
 
 public class FlipPlayer : MonoBehaviour
 {
@@ -23,7 +21,7 @@ public class FlipPlayer : MonoBehaviour
         FlipChildrenXScale(false);
     }
 
-    void Update()
+    void FixedUpdate()
     {
         float mousePositionX = Input.mousePosition.x / Screen.width;
 
@@ -35,8 +33,25 @@ public class FlipPlayer : MonoBehaviour
         {
             FlipChildrenXScale(true);
         }
+
         SetCurrentWeapon();
+
+        if (currentWeapon)
+        {
+            Rigidbody2D playerRb = GetComponent<Rigidbody2D>();
+            Rigidbody2D weaponRb = currentWeapon.GetComponent<Rigidbody2D>();
+
+            if (playerRb && weaponRb)
+            {
+                Vector2 offset = playerRb.position - weaponRb.position;
+
+                weaponRb.AddForce(offset * 3);
+            }
+        }
     }
+
+
+
 
     void SetCurrentWeapon()
     {
@@ -50,7 +65,6 @@ public class FlipPlayer : MonoBehaviour
             }
         }
     }
-
 
     void FlipChildrenXScale(bool shouldFlip)
     {
@@ -74,14 +88,6 @@ public class FlipPlayer : MonoBehaviour
 
     void TransferChild(Transform from, Transform to)
     {
-        /*if (from.GetChild(0).childCount > 0)
-        {
-            Transform child = from.GetChild(0);
-            child.SetParent(to);
-            child.localPosition = Vector3.zero;
-            Debug.Log(child);
-
-        }*/
         if (currentWeapon && currentWeapon.GetComponent<Rigidbody2D>().isKinematic)
         {
             currentWeapon.transform.SetParent(to.GetChild(0));
@@ -98,5 +104,4 @@ public class FlipPlayer : MonoBehaviour
         upperRightArm.sortingOrder = rightOrder;
         lowerRightArm.sortingOrder = rightOrder;
     }
-
 }

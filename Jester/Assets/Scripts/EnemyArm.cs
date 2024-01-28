@@ -1,23 +1,48 @@
 using RagdollCreatures;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 
 public class EnemyArm : MonoBehaviour
 {
     [SerializeField] RagdollLimb[] limbs;
     [SerializeField] float speed = 1.0f;
+    [SerializeField] float delayBetweenTransitions = 0.5f;
+
+    float muscleForce;
+    bool increasing;
 
     void Start()
     {
+        StartCoroutine(TransitionCoroutine());
     }
 
-    void Update()
+    IEnumerator TransitionCoroutine()
+    {
+        while (muscleForce < 10)
+        {
+            muscleForce += Time.deltaTime * speed;
+            UpdateMuscleForce();
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(delayBetweenTransitions);
+
+        while (muscleForce > 0.1f)
+        {
+            muscleForce -= Time.deltaTime * speed;
+            UpdateMuscleForce();
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(delayBetweenTransitions);
+        StartCoroutine(TransitionCoroutine());
+
+    }
+
+    void UpdateMuscleForce()
     {
         for (int i = 0; i < limbs.Length; i++)
         {
-            float muscleForce = Mathf.Sin(Time.time * speed) * 5.0f + 5.0f;
-
             limbs[i].muscleForce = muscleForce;
         }
     }

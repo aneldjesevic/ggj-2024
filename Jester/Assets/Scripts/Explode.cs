@@ -7,7 +7,7 @@ public class Explode : MonoBehaviour
 {
     [SerializeField] GameObject[] bodyParts;
 
-    public void ExplodeObj()
+    public void ExplodeObj(bool shouldDestroy)
     {
         foreach (GameObject part in bodyParts)
         {
@@ -32,7 +32,8 @@ public class Explode : MonoBehaviour
             rb.AddForce(randomForce * forceMagnitude);
 
             Destroy(part, 2.5f);
-            Destroy(gameObject);
+            if (shouldDestroy)
+                Destroy(gameObject);
         }
     }
 }

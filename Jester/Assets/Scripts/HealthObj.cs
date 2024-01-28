@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class HealthObj : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class HealthObj : MonoBehaviour
 
     [SerializeField] GameObject deathParticles;
     [SerializeField] Transform bodyObj;
+
+    [SerializeField] bool isPlayer = false;
 
     void Start()
     {
@@ -41,11 +44,38 @@ public class HealthObj : MonoBehaviour
 
             if (GetComponent<Explode>() != null)
             {
-                Destroy(slider.gameObject);
-                GetComponent<Explode>().ExplodeObj();
+                for (int i = 0; i < transform.GetChild(0).childCount; i++)
+                {
+                    if (transform.GetChild(0).GetChild(i).name.ToLower().Contains("lower") && transform.GetChild(0).GetChild(i).name.ToLower().Contains("arm"))
+                    {
+                        Destroy(transform.GetChild(0).GetChild(i).GetChild(0).gameObject);
+                    }
+                }
 
-                Destroy(gameObject, 2.5f);
+
+
+                if (!isPlayer)
+                {
+                    Destroy(slider.gameObject);
+                    GetComponent<Explode>().ExplodeObj(true);
+                    Destroy(gameObject, 2.5f);
+                }
+                else
+                {
+                    GetComponent<Explode>().ExplodeObj(false);
+                    for (int i = 0; i < transform.GetChild(0).childCount; i++)
+                    {
+                        transform.GetChild(0).GetChild(i).gameObject.layer = LayerMask.NameToLayer("Untouchable");
+                    }
+                    Invoke("Restart", 2f);
+                }
             }
         }
     }
+    void Restart()
+    {
+        Debug.Log("Restarting the game...");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
 }
