@@ -71,6 +71,16 @@ public class HealthObj : MonoBehaviour
                 }
             }
         }
+
+        if (isPlayer)
+        {
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+            if (enemies.Length > 0)
+            {
+                health -= Time.deltaTime * 0.3f;
+            }
+        }
     }
     public void GainHealth(int gainedHealth)
     {
@@ -81,7 +91,6 @@ public class HealthObj : MonoBehaviour
     }
     void Restart()
     {
-        Debug.Log("Restarting the game...");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 

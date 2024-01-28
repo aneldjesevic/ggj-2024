@@ -118,17 +118,25 @@ public class WaveSystem : MonoBehaviour
 
     void CheckForDoubleKill()
     {
+        int deadEnemies = 0;
+
         foreach (GameObject enemy in enemies)
         {
             if (enemy == null)
             {
-                float currentTime = Time.time;
-                if (currentTime - lastKillTime <= 1f)
-                {
-                    audience.ChangeVolume(3);
-                }
-                lastKillTime = currentTime;
+                deadEnemies++;
             }
+        }
+
+        if (deadEnemies > 1)
+        {
+            float currentTime = Time.time;
+            if (currentTime - lastKillTime <= 1f)
+            {
+                Debug.Log("doubledKill");
+                audience.ChangeVolume(3);
+            }
+            lastKillTime = currentTime;
         }
     }
 }

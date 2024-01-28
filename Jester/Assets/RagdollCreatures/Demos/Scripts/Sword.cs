@@ -53,7 +53,7 @@ namespace RagdollCreatures
 		{
 			if (Time.time >= lastHitTime + hitDelay)
 			{
-				Rigidbody2D parentRigidbody = parent.GetComponent<Rigidbody2D>();
+				Rigidbody2D parentRigidbody = parent.transform.parent.GetComponent<Rigidbody2D>();
 				if (null != parentRigidbody)
 				{
 					float angle = parentRigidbody.rotation % 360;

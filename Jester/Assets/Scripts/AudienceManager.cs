@@ -6,6 +6,7 @@ public class AudienceManager : MonoBehaviour
 {
     [SerializeField] AudioSource crowdAudioSource;
     [SerializeField] AudioSource kingAudioSource;
+    [SerializeField] AudioSource headshotAudiosource;
 
     float currentVolume;
 
@@ -36,7 +37,7 @@ public class AudienceManager : MonoBehaviour
             healthObj.GainHealth(1);
             crowdAudioSource.volume = currentVolume;
 
-            kingAudioSource.volume = 0.2f;
+            kingAudioSource.volume = 0.1f;
             if (!kingAudioSource.isPlaying)
                 kingAudioSource.Play();
         }
@@ -49,7 +50,9 @@ public class AudienceManager : MonoBehaviour
             healthObj.GainHealth(3);
             crowdAudioSource.volume = currentVolume;
 
-            kingAudioSource.volume = 0.5f;
+            headshotAudiosource.Play();
+
+            kingAudioSource.volume = 0.25f;
             if (!kingAudioSource.isPlaying)
                 kingAudioSource.Play();
         }
@@ -63,7 +66,7 @@ public class AudienceManager : MonoBehaviour
             if (!kingAudioSource.isPlaying)
                 crowdAudioSource.volume = currentVolume;
 
-            kingAudioSource.volume = 0.8f;
+            kingAudioSource.volume = 0.5f;
             kingAudioSource.Play();
         }
         Invoke("ResetState", 1f);
