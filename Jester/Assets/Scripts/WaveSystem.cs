@@ -68,10 +68,12 @@ public class WaveSystem : MonoBehaviour
             spawnedEnemies.Add(newEnemy);
         }
 
+        FindObjectOfType<King>().StartText(currentWave + 1);
+
         yield return new WaitUntil(() => AllEnemiesSpawned(spawnedEnemies));
 
         currentWave++;
-        if(currentWave > highscore)
+        if (currentWave > highscore)
         {
             highscore = currentWave;
             PlayerPrefs.SetInt("highscore", highscore);
