@@ -16,6 +16,9 @@ public class HealthObj : MonoBehaviour
 
     bool hasExploded;
 
+    public GameObject FadeOut;
+    public GameObject tomatoes;
+
     [SerializeField] GameObject deathParticles;
     [SerializeField] Transform bodyObj;
 
@@ -67,7 +70,6 @@ public class HealthObj : MonoBehaviour
                     {
                         transform.GetChild(0).GetChild(i).gameObject.layer = LayerMask.NameToLayer("Untouchable");
                     }
-                    Invoke("Restart", 2f);
                 }
             }
         }
@@ -79,6 +81,15 @@ public class HealthObj : MonoBehaviour
             if (enemies.Length > 0)
             {
                 health -= Time.deltaTime * 0.3f;
+            }
+            if(health <= 0)
+            {
+                if(FadeOut != null && tomatoes != null)
+                {
+                    FadeOut.SetActive(true);
+                    tomatoes.SetActive(true);
+                    Invoke("Restart", 2.2f);
+                }
             }
         }
     }
