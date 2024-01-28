@@ -19,7 +19,7 @@ public class HealthObj : MonoBehaviour
     [SerializeField] GameObject deathParticles;
     [SerializeField] Transform bodyObj;
 
-    [SerializeField] bool isPlayer = false;
+    public bool isPlayer = false;
 
     void Start()
     {
@@ -71,6 +71,13 @@ public class HealthObj : MonoBehaviour
                 }
             }
         }
+    }
+    public void GainHealth(int gainedHealth)
+    {
+        if (health + gainedHealth <= maxHealth)
+            health += gainedHealth;
+        else
+            health = maxHealth;
     }
     void Restart()
     {

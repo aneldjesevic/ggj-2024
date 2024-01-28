@@ -68,7 +68,6 @@ public class FlipPlayer : MonoBehaviour
 
     void FlipChildrenXScale(bool shouldFlip)
     {
-        Debug.Log(shouldFlip);
         foreach (SpriteRenderer sr in sprites)
         {
             sr.flipX = shouldFlip;

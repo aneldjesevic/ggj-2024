@@ -22,8 +22,14 @@ public class WaveSystem : MonoBehaviour
     [SerializeField] Animator animatorL;
     [SerializeField] Animator animatorR;
 
+    AudienceManager audience;
+
+    private float lastKillTime;
+
+
     void Start()
     {
+        audience = FindObjectOfType<AudienceManager>();
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
     }
 
@@ -83,6 +89,7 @@ public class WaveSystem : MonoBehaviour
     {
         animatorL.SetBool("open", true);
     }
+
     void StartOpenAnimR()
     {
         animatorR.SetBool("open", true);
@@ -103,9 +110,25 @@ public class WaveSystem : MonoBehaviour
 
         if (enemies.Length == 0 && !isInWave)
         {
-            Debug.Log("Starting Wave" + currentWave);
-
             StartCoroutine(StartWave());
+        }
+
+        CheckForDoubleKill();
+    }
+
+    void CheckForDoubleKill()
+    {
+        foreach (GameObject enemy in enemies)
+        {
+            if (enemy == null)
+            {
+                float currentTime = Time.time;
+                if (currentTime - lastKillTime <= 1f)
+                {
+                    audience.ChangeVolume(3);
+                }
+                lastKillTime = currentTime;
+            }
         }
     }
 }

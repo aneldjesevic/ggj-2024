@@ -30,9 +30,9 @@ public class Weapon : MonoBehaviour
 
             //Vector2 knockbackDirection = (transform.position - collision.transform.position).normalized;
 
-            collision.gameObject.transform.parent.GetComponentInParent<Rigidbody2D>().AddForce(transform.right * 300, ForceMode2D.Impulse);
+            collision.gameObject.transform.parent.GetComponentInParent<Rigidbody2D>().AddForce(transform.right * 200, ForceMode2D.Impulse);
 
-            GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>().AddForce(-transform.right * 160, ForceMode2D.Impulse);
+            GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>().AddForce(-transform.right * 60, ForceMode2D.Impulse);
         }
     }
 

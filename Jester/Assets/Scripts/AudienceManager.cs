@@ -4,16 +4,19 @@ using UnityEngine;
 
 public class AudienceManager : MonoBehaviour
 {
-    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioSource crowdAudioSource;
+    [SerializeField] AudioSource kingAudioSource;
 
     float currentVolume;
 
     [SerializeField] float speed = 5;
 
+    [SerializeField] HealthObj healthObj;
+
     private void Start()
     {
         currentVolume = 0.02f;
-        audioSource = GetComponent<AudioSource>();
+        crowdAudioSource = GetComponent<AudioSource>();
     }
 
     public void ChangeVolume(int stage)
@@ -21,33 +24,54 @@ public class AudienceManager : MonoBehaviour
         if (stage == 0)
         {
             //no hit
-            currentVolume = 0.02f;
-            audioSource.volume = currentVolume;
+            currentVolume = 0.01f;
+            crowdAudioSource.volume = currentVolume;
         }
         else if (stage == 1)
         {
+            Debug.Log("Normal kill");
+
             //normal hit
-            currentVolume = 0.075f;
-            audioSource.volume = currentVolume;
+            currentVolume = 0.055f;
+            healthObj.GainHealth(1);
+            crowdAudioSource.volume = currentVolume;
+
+            kingAudioSource.volume = 0.2f;
+            if (!kingAudioSource.isPlaying)
+                kingAudioSource.Play();
         }
         else if (stage == 2)
         {
+            Debug.Log("HeadShot kill");
+
             //headshot hit
-            currentVolume = 0.1f;
-            audioSource.volume = currentVolume;
+            currentVolume = 0.08f;
+            healthObj.GainHealth(3);
+            crowdAudioSource.volume = currentVolume;
+
+            kingAudioSource.volume = 0.5f;
+            if (!kingAudioSource.isPlaying)
+                kingAudioSource.Play();
         }
         else if (stage == 3)
         {
-            //long hit
-            currentVolume = 0.135f;
-            audioSource.volume = currentVolume;
+            //double kill
+            Debug.Log("Double kill");
+
+            currentVolume = 0.1f;
+            healthObj.GainHealth(5);
+            if (!kingAudioSource.isPlaying)
+                crowdAudioSource.volume = currentVolume;
+
+            kingAudioSource.volume = 0.8f;
+            kingAudioSource.Play();
         }
         Invoke("ResetState", 1f);
     }
 
     private void Update()
     {
-        audioSource.volume = Mathf.Lerp(audioSource.volume, currentVolume, speed * Time.deltaTime);
+        crowdAudioSource.volume = Mathf.Lerp(crowdAudioSource.volume, currentVolume, speed * Time.deltaTime);
     }
     void ResetState()
     {

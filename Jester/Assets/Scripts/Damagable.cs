@@ -55,14 +55,17 @@ public class Damagable : MonoBehaviour
 
     void TakeDamage(int damage, GameObject collision)
     {
-        if (name.ToLower().Contains("head"))
+        if (!healthObj.isPlayer)
         {
-            FindObjectOfType<AudienceManager>().ChangeVolume(2);
-            healthObj.health -= damage;
-        }
-        else
-        {
-            FindObjectOfType<AudienceManager>().ChangeVolume(1);
+            if (name.ToLower().Contains("head") && healthObj.health <= 2)
+            {
+                FindObjectOfType<AudienceManager>().ChangeVolume(2);
+                healthObj.health -= damage;
+            }
+            else if (healthObj.health <= 1)
+            {
+                FindObjectOfType<AudienceManager>().ChangeVolume(1);
+            }
         }
 
         feel.PlayFeedbacks();
