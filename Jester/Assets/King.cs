@@ -11,7 +11,17 @@ public class King : MonoBehaviour
 
     private void Start()
     {
-        StopText();
+        StartStartText();
+    }
+
+    void StartStartText()
+    {
+        bubble.SetActive(true);
+        if (PlayerPrefs.GetInt("highscore") >= 1)
+            text.text = "our best jester only got to " + (PlayerPrefs.GetInt("highscore"));
+        else
+            text.text = "our best jester only got to " + 1;
+        Invoke("StopText", 2f);
     }
 
     public void StartText(int waveIndex)
