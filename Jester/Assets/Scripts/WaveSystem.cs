@@ -124,7 +124,7 @@ public class WaveSystem : MonoBehaviour
             StartCoroutine(StartWave());
         }
 
-        CheckForDoubleKill();
+        //CheckForDoubleKill();
     }
 
     void CheckForDoubleKill()
