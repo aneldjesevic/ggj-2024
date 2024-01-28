@@ -10,6 +10,8 @@ public class CameraController : MonoBehaviour
     [SerializeField] float leftLimit;
     [SerializeField] float rightLimit;
 
+    public Transform targetY;
+
     void FixedUpdate()
     {
         if (target)
@@ -19,6 +21,7 @@ public class CameraController : MonoBehaviour
             Vector3 destination = transform.position + delta;
 
             destination.x = Mathf.Clamp(destination.x, leftLimit, rightLimit);
+            destination.y = targetY.position.y;
 
             transform.position = Vector3.SmoothDamp(transform.position, destination, ref velocity, dampTime);
         }

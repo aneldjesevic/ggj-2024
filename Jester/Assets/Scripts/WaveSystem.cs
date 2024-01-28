@@ -26,11 +26,14 @@ public class WaveSystem : MonoBehaviour
 
     private float lastKillTime;
 
+    int highscore;
 
     void Start()
     {
         audience = FindObjectOfType<AudienceManager>();
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+        highscore = PlayerPrefs.GetInt("highscore");
     }
 
     public IEnumerator StartWave()
@@ -68,6 +71,12 @@ public class WaveSystem : MonoBehaviour
         yield return new WaitUntil(() => AllEnemiesSpawned(spawnedEnemies));
 
         currentWave++;
+        if(currentWave > highscore)
+        {
+            highscore = currentWave;
+            PlayerPrefs.SetInt("highscore", highscore);
+        }
+
         isInWave = false;
 
         Invoke("StopOpenAnim", 2f);
